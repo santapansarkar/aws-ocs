@@ -1,0 +1,16 @@
+## SigScale OCS RADIUS Authorization Service
+##
+kind: Service
+apiVersion: v1
+metadata:
+  name: radius-auth
+  labels:
+    app.kubernetes.io/name: ocs
+spec:
+  selector:
+    app.kubernetes.io/component: ocs-node
+  ports:
+  - protocol: UDP
+    appProtocol: radius
+    port: 1812
+    targetPort: radius-auth
