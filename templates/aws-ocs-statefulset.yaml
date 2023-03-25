@@ -3,19 +3,19 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: ocs
+  name: "{{ .Values.metadataName }}"
   labels:
-    app.kubernetes.io/name: ocs
+    app.kubernetes.io/name: "{{ .Values.metadataName }}"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: ocs
+      app.kubernetes.io/name: "{{ .Values.metadataName }}"
   serviceName: otp
   replicas: 3
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: ocs
+        app.kubernetes.io/name: "{{ .Values.metadataName }}"
         app.kubernetes.io/component: ocs-node
     spec:
       terminationGracePeriodSeconds: 30
@@ -23,7 +23,8 @@ spec:
         fsGroup: 1000
       initContainers:
       - name: ocs-init
-        image: asia.gcr.io/sigscale-ocs/ocs
+        #image: asia.gcr.io/sigscale-ocs/ocs
+        image: "{{.Values.image.repository}}/{{ .Values.image.imageName }}"
         env:
         - name: ERLARGS
           value: ""
